@@ -1,8 +1,5 @@
 import numpy as np
 
-
-
-
 def get1kdict():
     root='/Users/martian2049/Desktop/unsupervised/crawl/data-mini/char.txt'
     f=open(root,'rb')
