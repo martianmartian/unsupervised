@@ -27,7 +27,7 @@ import numpy as np
 from web.crawl import get_defcrawl
 from chars import get1kdict
 dict1k,dict1kem,base1000 = get1kdict()
-for i in range(317,len(base1000)):
+for i in range(945,len(base1000)):
     base=base1000[i]
     print(base,i)
     defcrawl=get_defcrawl(base)
