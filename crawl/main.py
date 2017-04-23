@@ -14,28 +14,48 @@
 #             # use as a def word
 #             # 
 
-defcrawl='''自百度一下182*****431|手机版|我的词典用百度汉语查看更全面更权威的汉语知识，在百度汉语中查看“自”拼音zì部首自五笔THD笔顺ノ丨フ一一一生词本基本释义详细解释本人，己身：～己。～家。～身。～白。～满。～诩。～馁。～重（zhòng）。～尊。～谦。～觉（jué）。～疚。～学。～圆其说。～惭形秽。～强不息。从，由：～从。～古以来。当然：～然。～不待言。～生～灭。放任～流。假如：～非圣人，外宁必有内忧。其他信息五笔THD四角26000仓颉HBU五行火笔画数6郑码NL字结构单一结构部件拆解丿、目注音ㄗˋ统一码81EA相关组词自决自若自由躬自自足自财自扰自鬻空自自拘自爱自定自卑独自自省自屈自举自奇自古自然相关字信八力及孔字热搜字亟亦冢匙处方©2017Baidu使用百度前必读百度首页问题反馈关注微博用户QQ群：484758177'''
 
 import re
 import numpy as np
 
-def embed_char(char,string,char_vec,base_mat):
-    candidate=[base_mat[j] for i,j in enumerate(string) if j in base_mat and j!=char]
-    char_vec+=np.array(candidate).sum(axis=0)
 
 from chars import get1kdict
-dict1k,dict1kem = get1kdict()
-embed_char('自',defcrawl,dict1kem['自'],dict1k)
+dict1k,dict1kem,base1000 = get1kdict()
+defcrawl='''本人，己身：～己。～家。～身。～白。～满。～诩。～馁。～重（zhòng ）。～尊。～谦。～觉（jué ）。～疚。～学。～圆其说。～惭形秽。～强不息。
+从，由：～从。～古以来。
+当然：～然。～不待言。～生～灭。放任～流。假如：～非圣人，外宁必有内忧。又如:自戕(戕害自己;自杀);自呈(自首;认罪);自敝(自己困败);自各儿(自己);自凛(自身寒微);自引(自行引退;自杀)
+自决 自若 自由 躬自 自足 自财 自扰 自鬻 空自 自拘 自爱 自定 自卑 独自 自省 自屈 自举 自奇 自古 自然假如：～非圣人，外宁必有内忧。〈介〉自己,自我;本身 [self;oneself;one’s own]
+亲自 [
+'''
+    # 这里价格范围!!!!!!!!!
+invalid_chars=''.join([char for i,char in enumerate(defcrawl) if char not in dict1kem and char!="自"])
+valid_chars=''.join([char for i,char in enumerate(defcrawl) if char in dict1kem and char!="自"])
+candidate=[dict1k[char] for i,char in enumerate(valid_chars)]
+dict1kem['自']+=np.array(candidate).sum(axis=0)
 print("\ndict1kem['自'][0:10]:==> ", dict1kem['自'][0:10],'\n')
 
 
-kn='/Users/martian2049/Desktop/unsupervised/crawl/data-mini/kn1.txt'
+kn='/Users/martian2049/Desktop/unsupervised/crawl/data-mini/kn.txt'
 f=open(kn,'rb')
-ffulls=''.join([line.decode().strip() for line in f.readlines()])
+fullarticle=''.join([line.decode().strip() for line in f.readlines()])
 f.close()
-ffulls=re.findall(r'[\u4e00-\u9fff]+[,;，。]',ffulls)
-print("ffulls[:10]:==> ", ffulls[:10],'\n')
+# fullarticle=re.findall(r'[\u4e00-\u9fff]+[.。]',fullarticle)
+# print("fullarticle[:10]:==> ", fullarticle[:10],'\n')
 
-for i in ffulls:
-    
+
+# for sent in fullarticle:
+#     candidate=[dict1k[char] for char in sent if char in valid_chars]
+#     if np.array(candidate).shape[0]==0:
+#         continue
+
+#     dict1kem['自']+=np.array(candidate).sum(axis=0)
+
+
+
+sort_index = np.argsort(dict1kem['自'])
+print("[base1000[i] for i in sort_index[-50:-1]],'\n':==>",[base1000[i] for i in sort_index[-50:-1]],'\n')
+# print("invalid_chars,'\n':==>",invalid_chars,'\n')
+print("valid_chars,'\n':==>",valid_chars,'\n')
+print(dict1kem['自'])
+
 

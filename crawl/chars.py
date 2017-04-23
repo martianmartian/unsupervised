@@ -14,4 +14,4 @@ def get1kdict():
     dict1k=dict((j,mat1k[i]) for i,j in enumerate(chars[0]))
     dict1kem=dict((j,np.zeros((1000),dtype=np.int)) for i,j in enumerate(chars[0]))
 
-    return dict1k,dict1kem
+    return dict1k,dict1kem,chars[0]
