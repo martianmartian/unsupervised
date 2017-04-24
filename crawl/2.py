@@ -20,6 +20,9 @@
 #         save
 #     wash
 #         save
+# this is only the first impression. 
+# another round of more generalized learning should be applied. 
+
 
 import re
 import numpy as np
@@ -63,12 +66,24 @@ dict1k,dict1kem,base1000 = get1kdict()
 
 # # np.save('save/dict1kem_washedup.npy',dict1kem)
 dict1kem=np.load('save/dict1kem_washedup.npy').item()
-base='床'
+base='杀'
 sort_index = np.argsort(dict1kem[base])
 print("[base1000[i] for i in sort_index[-50:]],:==>\n",[base1000[i] for i in sort_index[-50:]],'\n')
-print("dict1kem['"+base+"']==>",dict1kem[base])
+# print("dict1kem['"+base+"']==>",dict1kem[base])
+base='救'
+sort_index = np.argsort(dict1kem[base])
+print("[base1000[i] for i in sort_index[-50:]],:==>\n",[base1000[i] for i in sort_index[-50:]],'\n')
+# print("dict1kem['"+base+"']==>",dict1kem[base])
 
+# epsi=0
+# # epsi=0.0001
+# def softmax(x):
+#     return np.exp(x)/np.sum(np.exp(x))
 
-
-
+# print(softmax(dict1kem['父']+epsi))
+# a=np.dot(softmax(dict1kem['父']+epsi),softmax(dict1kem['母']+epsi))
+# b=np.dot(softmax(dict1kem['男']+epsi),softmax(dict1kem['女']+epsi))
+# print(a)
+# print(b)
+# print(a/b)
 
