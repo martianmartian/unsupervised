@@ -63,17 +63,36 @@ dict1k,dict1kem,base1000 = get1kdict()
 # #         # print(dict1kem[base])
 # #         # break
 
+# init with random number>0!!!!!!!!!!!!!!!!!!!!
+
+
+def cos_sim(a,b):
+    return np.dot(a,b)/(np.sqrt(np.dot(a,a))*np.sqrt(np.dot(b,b)))
 
 # # np.save('save/dict1kem_washedup.npy',dict1kem)
 dict1kem=np.load('save/dict1kem_washedup.npy').item()
-base='杀'
+# base='静'
+# sort_index = np.argsort(dict1kem[base])
+# print("[base1000[i] for i in sort_index[-50:]],:==>\n",[base1000[i] for i in sort_index[-50:]],'\n')
+# # print("dict1kem['"+base+"']==>",dict1kem[base])
+base='胜'
 sort_index = np.argsort(dict1kem[base])
 print("[base1000[i] for i in sort_index[-50:]],:==>\n",[base1000[i] for i in sort_index[-50:]],'\n')
 # print("dict1kem['"+base+"']==>",dict1kem[base])
-base='救'
-sort_index = np.argsort(dict1kem[base])
-print("[base1000[i] for i in sort_index[-50:]],:==>\n",[base1000[i] for i in sort_index[-50:]],'\n')
-# print("dict1kem['"+base+"']==>",dict1kem[base])
+
+
+a='胜利对'
+b='失败错'
+va=np.zeros((1000,))
+vb=np.zeros((1000,))
+for i in range(len(a)):
+    va+=dict1kem[a[i]]
+    vb+=dict1kem[b[i]]
+print(cos_sim(va,vb))
+
+# for i,w in enumerate(dict1kem):
+#     sim=cos_sim(dict1kem['静']+dict1kem['安'],dict1kem[w])
+#     print(w,':==>',sim) if sim>0.6 else False
 
 # epsi=0
 # # epsi=0.0001
